@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprawdź informacje o IP</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: left; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh;
+        }
+        input { padding: 10px; width: 250px; }
+        button { padding: 10px 20px; cursor: pointer; }
+        .result { margin-top: 20px; font-weight: bold; text-align: left; } 
+    </style>
+</head>
+<body>
+    <h2>Dowiedz się więcej o IP</h2>
+    <form id="ipForm">
+        <input type="text" id="ipInput" placeholder="Wpisz adres IP" required>
+        <button type="submit">Sprawdź</button>
+    </form>
+    <div id="result" class="result"></div>
+
+    <script>
+        document.getElementById("ipForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            let SERVER_IP = "127.0.0.1";
+            let SERVER_PORT = "8000";
+            let ip = document.getElementById("ipInput").value;
+            let response = await fetch(`http://${SERVER_IP}:${SERVER_PORT}/ips/${ip}`);
+            let data = await response.json();
+            document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+        });
+    </script>
+</body>
+</html>
